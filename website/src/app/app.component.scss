@@ -1,0 +1,27 @@
+
+$header-height : 4rem;
+
+.header{
+    position: fixed;
+    height : $header-height
+}
+
+
+.logo{
+    height: 3.5rem;
+}
+
+.section{
+    // min-height: 130vh;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.bg-img-1{
+    background-image: url(../assets/ziggy.jpg);
+    height: 80vh;
+}
+
+.about{
+    height: 50vh;
+}
