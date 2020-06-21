@@ -1,22 +1,29 @@
 
 $header-height : 4rem;
-$header-color : #B18904;
+$primary-color : #B18904;
 
 .header{
     position: fixed;
-    background-color: $header-color;
+    background-color: $primary-color;
     height : $header-height;
     z-index: 999;
     display: flex;
     justify-content: space-between;
-    .logo{
-        height: 3.5rem;
-    }
-    a{
+    .nav-link{
+        text-decoration: none;
         padding-left: 1rem;
+        color: white;
         &:hover{
             cursor: pointer;
             color: rgb(255, 205, 42);
         }
+    }
+}
+
+.logo-container{
+    display: flex;
+    align-items: center;
+    .logo{
+        height: 3.5rem;
     }
 }

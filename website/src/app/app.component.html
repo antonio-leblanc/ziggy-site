@@ -1,10 +1,13 @@
-<mat-toolbar class='header'>
-    <img src="../assets/logo.png" class='logo'>
+<mat-toolbar class='header z-depth-2'>
+    <a class ="logo-container" [routerLink]="['home']">
+        <img src="../assets/logo.png" class='logo'>
+    </a>
 
     <div>
-        <a>Sobre</a>
-        <a>FAQ</a>
-        <a>Contato</a>
+        <a class='nav-link' [routerLink]="['home']">Inicio</a>
+        <a class='nav-link' [routerLink]="['plan']">Meu Plano</a>
+        <a class='nav-link'>FAQ</a>
+        <!-- <a>Contato</a> -->
     </div>
 </mat-toolbar>
 

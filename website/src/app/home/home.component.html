@@ -1,9 +1,9 @@
 <section class="section bg-img-1">
-    <div style="background-color: rgba(0, 0, 0, 0.2); height:100%;">
+    <div style="background-color: rgba(0, 0, 0, 0.5); height:100%;">
     <div class="intro-content">
         <h1 class='intro-title'>Ziggy Comida Natural</h1>
         <h2 class='intro-subtitle'>Tão saudável e apetitosa que até você vai querer comer! </h2>
-        <button mat-raised-button color='warn' class='simule-btn' [routerLink]="['plan']">
+        <button mat-raised-button color='warn' class='simule-btn' [routerLink]="['/plan']">
             Simule Seu Plano
         </button>
     </div>
@@ -73,8 +73,7 @@
 
   
 </section>
-<div>
-</div>
+
 
 <section class="section bg-img-2">
     <svg class="wave" viewBox="0 0 100 100" preserveAspectRatio="none" version="1.1"><path d="M0 50 H100 V0 H0 V50 C 33.3333 100, 66.6666 0, 100 50"></path></svg>
@@ -93,7 +92,7 @@
         
         <mat-grid-tile>
             <div class="img-container">
-                <img class="rounded-img" src='../assets/ziggy.jpg'>
+                <img class="rounded-img" src='../../assets/ziggy_sad.jpeg'>
             </div>
         </mat-grid-tile>
 
@@ -143,7 +142,7 @@
             <mat-card-header>
                 <mat-card-title>Adélia</mat-card-title>
             </mat-card-header>
-            <img mat-card-image src='../assets/cliente3.jpeg'>
+            <img mat-card-image src='../assets/cliente_3.jpeg'>
             <mat-card-content>
                 "Hm adoro essa comida"
             </mat-card-content>
@@ -178,7 +177,7 @@
         <h1>Fale com agente</h1>
     </div>
 
-    <button mat-raised-button color='warn' class='simule-btn'>
+    <button mat-raised-button color='warn' class='simule-btn' [routerLink]="['/plan']">
         Simule Seu Plano
     </button>
 </section>

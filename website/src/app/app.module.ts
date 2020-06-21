@@ -4,6 +4,11 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms'  
+import { ReactiveFormsModule} from '@angular/forms' 
+
+import { HomeComponent } from './home/home.component';
+import { PlanComponent } from './plan/plan.component';
 
 import { MatToolbarModule } from  '@angular/material/toolbar';
 import { MatIconModule } from  '@angular/material/icon';
@@ -11,9 +16,10 @@ import { MatListModule } from  '@angular/material/list';
 import { MatButtonModule } from  '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
-import { HomeComponent } from './home/home.component';
-import { PlanComponent } from './plan/plan.component';
-
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -30,7 +36,13 @@ import { PlanComponent } from './plan/plan.component';
     MatListModule,
     MatButtonModule,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    MatStepperModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
