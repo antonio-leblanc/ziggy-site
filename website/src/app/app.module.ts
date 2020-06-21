@@ -11,11 +11,15 @@ import { MatListModule } from  '@angular/material/list';
 import { MatButtonModule } from  '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { HomeComponent } from './home/home.component';
+import { PlanComponent } from './plan/plan.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    PlanComponent
   ],
   imports: [
     BrowserModule,
