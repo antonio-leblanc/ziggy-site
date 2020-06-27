@@ -11,9 +11,13 @@ export class PlanComponent implements OnInit {
 
 
   constructor(private _formBuilder: FormBuilder, private foodCalc: FoodCalcService) {}
+  
+  calculating :boolean = false;
+  finished :boolean = false;
 
+  dog:any ;
+  
   breeds = this.foodCalc.getBreeds() 
-  foodTable = this.foodCalc.getCalories()
     
   activities : any = [
     {name:'Pouco Ativo', value:'inactive'},
@@ -39,11 +43,11 @@ export class PlanComponent implements OnInit {
   ngOnInit() {
 
     this.firstFormGroup = this._formBuilder.group({
-      name: ['Junior', Validators.required]
+      name: ['', Validators.required]
     });
     this.secondFormGroup = this._formBuilder.group({
-      age: ['5', [Validators.required, Validators.min(1)]],
-      breed: ['Labrador', Validators.required],
+      age: ['', [Validators.required, Validators.min(1)]],
+      breed: ['', Validators.required],
     });
     this.thirdFormGroup = this._formBuilder.group({
       weight: ['', Validators.required],
@@ -60,6 +64,7 @@ export class PlanComponent implements OnInit {
       special_case: ['', Validators.required],
     });
   }
+
 
   changeWeight() {
     console.log('mudou peso',this.thirdFormGroup.value.weight_range)
@@ -79,24 +84,32 @@ export class PlanComponent implements OnInit {
         [
         Validators.min(actual_weight),
         Validators.max(99)]);
-        this.min_weight = actual_weight
+      this.min_weight = actual_weight
     }
     this.thirdFormGroup.controls['ideal_weight'].updateValueAndValidity()
   }
 
   calculatePlan(){
-    console.log(this.secondFormGroup.value)
-    var all_weights = this.foodTable.map(item => parseFloat(item.weight_kg) );
-    var dog_weight = this.secondFormGroup.value.weight
+    this.calculating = true;
+    this.finished = false;
 
-    var closest = all_weights.reduce(function(prev, curr) {
-      return (Math.abs(curr - dog_weight) < Math.abs(prev - dog_weight) ? curr : prev);
-    });
-
-    var dog_activity = this.thirdFormGroup.value.activity
-    var calories_per_weight = this.foodTable.filter(item => parseFloat(item.weight_kg) == closest)[0];
-    console.log('Calories',calories_per_weight,calories_per_weight[dog_activity])
-
+    this.dog = Object.assign({}, 
+      this.firstFormGroup.value,
+      this.secondFormGroup.value,
+      this.thirdFormGroup.value,
+      this.fourthFormGroup.value,
+      this.fithFormGroup.value,
+      );
+    
+    
+    this.dog = this.foodCalc.calculatePlan(this.dog)
+    
+    console.log(this.dog)
+        
+    setTimeout( () => {
+      this.calculating = false;
+      this.finished = true;
+    },3000)
   }
   
 }

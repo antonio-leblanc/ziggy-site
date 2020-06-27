@@ -1,5 +1,8 @@
 <main>
-
+    <app-loader *ngIf='calculating'></app-loader>
+    <!-- <section *ngIf='!finished'> -->
+    <section>
+        
     <mat-vertical-stepper linear #stepper>
         <mat-step [stepControl]="firstFormGroup">
             <form [formGroup]="firstFormGroup">
@@ -9,7 +12,7 @@
                     <input matInput placeholder="Estou com fome!" formControlName="name" required>
                 </mat-form-field>
                 <div>
-                    <button mat-button matStepperNext>Avançar</button>
+                    <button mat-stroked-button color='primary' matStepperNext>Avançar</button>
                 </div>
             </form>
         </mat-step>
@@ -35,7 +38,7 @@
                 </div>
                 <div>
                     <button mat-button matStepperPrevious>Voltar</button>
-                    <button mat-button matStepperNext>Avançar</button>
+                    <button mat-stroked-button color='primary' matStepperNext>Avançar</button>
                 </div>
             </form>
         </mat-step>
@@ -71,7 +74,7 @@
 
                 <div>
                     <button mat-button matStepperPrevious>Voltar</button>
-                    <button mat-button matStepperNext>Avançar</button>
+                    <button mat-stroked-button color='primary' matStepperNext>Avançar</button>
                 </div>
             </form>
         </mat-step>
@@ -80,9 +83,9 @@
 
         <mat-step [stepControl]="fourthFormGroup">
             <form [formGroup]="fourthFormGroup">
-                <ng-template matStepLabel>E a atividade</ng-template>
+                <ng-template matStepLabel> Falando agora da atividade</ng-template>
                 <mat-form-field>
-                    <mat-label>Atividade</mat-label>
+                    <mat-label>Nível de atividade</mat-label>
                     <mat-select formControlName="activity" required>
                         <mat-option *ngFor="let act of activities" [value]="act.value">
                         {{act.name}}
@@ -92,7 +95,7 @@
 
                 <div>
                     <button mat-button matStepperPrevious>Voltar</button>
-                    <button mat-button matStepperNext>Avançar</button>
+                    <button mat-stroked-button color='primary' matStepperNext>Avançar</button>
                 </div>
             </form>
         </mat-step>
@@ -102,7 +105,7 @@
                 <ng-template matStepLabel>Como é a saúde de {{firstFormGroup.value.name}}</ng-template>
                 <div>
                     <mat-form-field>
-                        <mat-label>Tem alguma alergia ou doença?</mat-label>
+                        <mat-label>Alergias ou doenças?</mat-label>
                         <mat-select formControlName="illness" required>
                             <mat-option [value]='true'>Sim</mat-option>
                             <mat-option [value]='false'>Não</mat-option>
@@ -111,7 +114,7 @@
                 </div>
                 <div>
                     <mat-form-field>
-                        <mat-label>Precisa de uma receita especial?</mat-label>
+                        <mat-label>Precisa de receita especial?</mat-label>
                         <mat-select formControlName="special_case" required>
                             <mat-option [value]='true'>Sim</mat-option>
                             <mat-option [value]='false'>Não</mat-option>
@@ -122,7 +125,7 @@
 
                 <div>
                     <button mat-button matStepperPrevious>Voltar</button>
-                    <button mat-button matStepperNext>Avançar</button>
+                    <button mat-stroked-button color='primary' matStepperNext>Avançar</button>
                 </div>
             </form>
         </mat-step>
@@ -137,5 +140,21 @@
             </div>
         </mat-step>
     </mat-vertical-stepper>
+    
+    </section>
+
+    <section *ngIf='finished'>
+        <h1>O cardápio ideal para seu melhor amigo!</h1>
+        <p> Selecionamos o plano perfeito para um {{dog.breed}} de {{dog.age}} anos que pesa {{dog.weight}} kg: </p>
+        <ul>
+            <li>Alimentação diária: {{dog.grams_per_day}} gramas</li>
+            <li>Nossa formula especial de comida para cão {{dog.type}}</li>
+            <li>Estimativa de preço semanal: {{dog.price_per_week}} R$, representando {{dog.packages_per_week}} pacotes de 500g</li>
+        </ul>
+        
+        <img src="../../assets/dog-food.svg">
+        
+
+    </section>
 
 </main>
