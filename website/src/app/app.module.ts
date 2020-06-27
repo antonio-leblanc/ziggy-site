@@ -9,6 +9,7 @@ import { ReactiveFormsModule} from '@angular/forms'
 
 import { HomeComponent } from './home/home.component';
 import { PlanComponent } from './plan/plan.component';
+import { LoaderComponent } from './loader/loader.component';
 
 import { MatToolbarModule } from  '@angular/material/toolbar';
 import { MatIconModule } from  '@angular/material/icon';
@@ -20,12 +21,14 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    PlanComponent
+    PlanComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,8 @@ import {MatSelectModule} from '@angular/material/select';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
