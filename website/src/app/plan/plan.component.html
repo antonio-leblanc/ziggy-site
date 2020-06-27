@@ -20,7 +20,7 @@
                 <div>
                     <mat-form-field>
                         <mat-label>Idade</mat-label>
-                        <input matInput formControlName="age" placeholder="Anos" type="number" required>
+                        <input matInput formControlName="age" placeholder="Anos" type="number" min=1 required>
                     </mat-form-field>
                 </div>
                 <div>
@@ -47,25 +47,25 @@
                 <div>
                     <mat-form-field>
                         <mat-label>Peso (kg)</mat-label>
-                        <input matInput formControlName="weight" placeholder="" type="number" required>
+                        <input matInput formControlName="weight" placeholder="" type="number" required (change)="changeWeight()">
                     </mat-form-field>
                 </div>
                 
                 <div>
                     <mat-form-field>
                         <mat-label>{{firstFormGroup.value.name}} está ...</mat-label>
-                        <mat-select formControlName="weight_range" required>
-                          <mat-option *ngFor="let eat_style of weight_ranges" [value]="eat_style.name">
-                            {{eat_style.name}}
+                        <mat-select formControlName="weight_range" required (selectionChange)="changeWeight()">
+                          <mat-option *ngFor="let w_range of weight_ranges" [value]="w_range.value">
+                            {{w_range.name}}
                           </mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
 
-                <div>
+                <div *ngIf='thirdFormGroup.value.weight_range !=0'>
                     <mat-form-field>
-                        <mat-label>Peso ideal (kg)</mat-label>
-                        <input matInput formControlName="ideal_weight" placeholder="" type="number" required>
+                        <mat-label>Peso ideal - kg (opcional)</mat-label>
+                        <input matInput formControlName="ideal_weight" placeholder="" type="number" [min]='min_weight' [max]='max_weight'>
                     </mat-form-field>
                 </div>
 
@@ -91,6 +91,7 @@
                 </mat-form-field>
 
                 <div>
+                    <button mat-button matStepperPrevious>Voltar</button>
                     <button mat-button matStepperNext>Avançar</button>
                 </div>
             </form>
@@ -120,6 +121,7 @@
 
 
                 <div>
+                    <button mat-button matStepperPrevious>Voltar</button>
                     <button mat-button matStepperNext>Avançar</button>
                 </div>
             </form>

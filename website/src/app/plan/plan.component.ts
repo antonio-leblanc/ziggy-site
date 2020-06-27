@@ -22,10 +22,13 @@ export class PlanComponent implements OnInit {
   ]
 
   weight_ranges : any = [
-    {'name':'Abaixo de peso'},
-    {'name':'Com o peso ideal'},
-    {'name':'Acima do peso'},
+    {name:'Acima do peso', value:1},
+    {name:'Com o peso ideal', value:0},
+    {name:'Abaixo de peso', value:-1},
   ]
+
+  min_weight = 0;
+  max_weight = 99;
 
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -39,13 +42,13 @@ export class PlanComponent implements OnInit {
       name: ['Junior', Validators.required]
     });
     this.secondFormGroup = this._formBuilder.group({
-      age: ['5', Validators.required],
+      age: ['5', [Validators.required, Validators.min(1)]],
       breed: ['Labrador', Validators.required],
     });
     this.thirdFormGroup = this._formBuilder.group({
-      weight: ['12', Validators.required],
+      weight: ['', Validators.required],
       weight_range: ['', Validators.required],
-      ideal_weight: ['', Validators.required],
+      ideal_weight: ['', [Validators.min(this.min_weight), Validators.max(this.max_weight)]],
     });
     
     this.fourthFormGroup = this._formBuilder.group({
@@ -56,7 +59,29 @@ export class PlanComponent implements OnInit {
       illness: ['', Validators.required],
       special_case: ['', Validators.required],
     });
-   
+  }
+
+  changeWeight() {
+    console.log('mudou peso',this.thirdFormGroup.value.weight_range)
+    var actual_weight = this.thirdFormGroup.value.weight
+    // this.thirdFormGroup.patchValue({
+    //   ideal_weight: actual_weight
+    // })
+    if (this.thirdFormGroup.value.weight_range == 1){
+      this.thirdFormGroup.controls['ideal_weight'].setValidators(
+        [, 
+        Validators.min(0),
+        Validators.max(actual_weight)]);
+      this.max_weight = actual_weight
+    }
+    if (this.thirdFormGroup.value.weight_range == -1){
+      this.thirdFormGroup.controls['ideal_weight'].setValidators(
+        [
+        Validators.min(actual_weight),
+        Validators.max(99)]);
+        this.min_weight = actual_weight
+    }
+    this.thirdFormGroup.controls['ideal_weight'].updateValueAndValidity()
   }
 
   calculatePlan(){
