@@ -7,7 +7,16 @@ export class FoodCalcService {
 
   constructor() { }
 
-
+  getBreeds(){
+    return [
+      {'name':'Labrador'},
+      {'name':'Buldog Francês'},
+      {'name':'Chitsu'},
+      {'name':'Puggie'},
+      {'name':'Outro'},
+      {'name':'Sem raça definida'},
+    ]
+  }
   getCalories() {
     return [
       {

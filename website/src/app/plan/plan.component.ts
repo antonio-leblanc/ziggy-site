@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FoodCalcService } from '../food-calc.service';
 
 @Component({
   selector: 'app-plan',
@@ -9,51 +10,68 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class PlanComponent implements OnInit {
 
 
-  breeds : any = [
-    {'name':'Labrador'},
-    {'name':'Border-Collie'},
-    {'name':'Posso botar varias raças'},
-  ]
+  constructor(private _formBuilder: FormBuilder, private foodCalc: FoodCalcService) {}
 
+  breeds = this.foodCalc.getBreeds() 
+  foodTable = this.foodCalc.getCalories()
+    
   activities : any = [
-    {'name':'Pouco Ativo'},
-    {'name':'Normalmente Ativo'},
-    {'name':'Hyper Ativo'},
+    {name:'Pouco Ativo', value:'inactive'},
+    {name:'Ativo', value:'active'},
+    {name:'Muito Ativo', value:'extra_active'},
   ]
 
-  eating_styles : any = [
-    {'name':'Come Devagar'},
-    {'name':'Come Rápido'},
-    {'name':'Doido de pedra'},
+  weight_ranges : any = [
+    {'name':'Abaixo de peso'},
+    {'name':'Com o peso ideal'},
+    {'name':'Acima do peso'},
   ]
-
 
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
-
-  constructor(private _formBuilder: FormBuilder) {}
+  fourthFormGroup: FormGroup;
+  fithFormGroup: FormGroup;
 
   ngOnInit() {
+
     this.firstFormGroup = this._formBuilder.group({
-      name: ['', Validators.required]
+      name: ['Junior', Validators.required]
     });
     this.secondFormGroup = this._formBuilder.group({
-      age: ['', Validators.required],
-      weight: ['', Validators.required],
-      breed: ['', Validators.required],
+      age: ['5', Validators.required],
+      breed: ['Labrador', Validators.required],
     });
     this.thirdFormGroup = this._formBuilder.group({
+      weight: ['12', Validators.required],
+      weight_range: ['', Validators.required],
       ideal_weight: ['', Validators.required],
-      activity: ['', Validators.required],
-      eating_style: ['', Validators.required],
     });
-  
-  
+    
+    this.fourthFormGroup = this._formBuilder.group({
+      activity: ['', Validators.required],
+    });
+    
+    this.fithFormGroup = this._formBuilder.group({
+      illness: ['', Validators.required],
+      special_case: ['', Validators.required],
+    });
+   
   }
 
-  testClick(){
+  calculatePlan(){
     console.log(this.secondFormGroup.value)
+    var all_weights = this.foodTable.map(item => parseFloat(item.weight_kg) );
+    var dog_weight = this.secondFormGroup.value.weight
+
+    var closest = all_weights.reduce(function(prev, curr) {
+      return (Math.abs(curr - dog_weight) < Math.abs(prev - dog_weight) ? curr : prev);
+    });
+
+    var dog_activity = this.thirdFormGroup.value.activity
+    var calories_per_weight = this.foodTable.filter(item => parseFloat(item.weight_kg) == closest)[0];
+    console.log('Calories',calories_per_weight,calories_per_weight[dog_activity])
+
   }
   
 }

@@ -13,19 +13,14 @@
                 </div>
             </form>
         </mat-step>
+        
         <mat-step [stepControl]="secondFormGroup">
             <form [formGroup]="secondFormGroup">
                 <ng-template matStepLabel>Fale-nos mais sobre {{firstFormGroup.value.name}}</ng-template>
                 <div>
                     <mat-form-field>
-                        <mat-label>Idade (anos)</mat-label>
-                        <input matInput formControlName="age" placeholder="" type="number" required>
-                    </mat-form-field>
-                </div>
-                <div>
-                    <mat-form-field>
-                        <mat-label>Peso (kg)</mat-label>
-                        <input matInput formControlName="weight" placeholder="" type="number" required>
+                        <mat-label>Idade</mat-label>
+                        <input matInput formControlName="age" placeholder="Anos" type="number" required>
                     </mat-form-field>
                 </div>
                 <div>
@@ -47,33 +42,33 @@
 
         <mat-step [stepControl]="thirdFormGroup">
             <form [formGroup]="thirdFormGroup">
-                <ng-template matStepLabel>Fale-nos mais sobre {{firstFormGroup.value.name}}</ng-template>
+                <ng-template matStepLabel>Como anda o peso de {{firstFormGroup.value.name}}</ng-template>
+                
                 <div>
                     <mat-form-field>
-                        <mat-label>Peso Ideal</mat-label>
-                        <input matInput formControlName="ideal_weight" placeholder="" type="number" required>
+                        <mat-label>Peso (kg)</mat-label>
+                        <input matInput formControlName="weight" placeholder="" type="number" required>
                     </mat-form-field>
                 </div>
+                
                 <div>
                     <mat-form-field>
-                        <mat-label>Nível de atividade</mat-label>
-                        <mat-select formControlName="activity" required>
-                          <mat-option *ngFor="let act of activities" [value]="act.name">
-                            {{act.name}}
-                          </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div>
-                    <mat-form-field>
-                        <mat-label>Habitos Alimentares</mat-label>
-                        <mat-select formControlName="eating_style" required>
-                          <mat-option *ngFor="let eat_style of eating_styles" [value]="eat_style.name">
+                        <mat-label>{{firstFormGroup.value.name}} está ...</mat-label>
+                        <mat-select formControlName="weight_range" required>
+                          <mat-option *ngFor="let eat_style of weight_ranges" [value]="eat_style.name">
                             {{eat_style.name}}
                           </mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
+
+                <div>
+                    <mat-form-field>
+                        <mat-label>Peso ideal (kg)</mat-label>
+                        <input matInput formControlName="ideal_weight" placeholder="" type="number" required>
+                    </mat-form-field>
+                </div>
+
                 <div>
                     <button mat-button matStepperPrevious>Voltar</button>
                     <button mat-button matStepperNext>Avançar</button>
@@ -81,13 +76,62 @@
             </form>
         </mat-step>
 
+
+
+        <mat-step [stepControl]="fourthFormGroup">
+            <form [formGroup]="fourthFormGroup">
+                <ng-template matStepLabel>E a atividade</ng-template>
+                <mat-form-field>
+                    <mat-label>Atividade</mat-label>
+                    <mat-select formControlName="activity" required>
+                        <mat-option *ngFor="let act of activities" [value]="act.value">
+                        {{act.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div>
+                    <button mat-button matStepperNext>Avançar</button>
+                </div>
+            </form>
+        </mat-step>
+
+        <mat-step [stepControl]="fithFormGroup">
+            <form [formGroup]="fithFormGroup">
+                <ng-template matStepLabel>Como é a saúde de {{firstFormGroup.value.name}}</ng-template>
+                <div>
+                    <mat-form-field>
+                        <mat-label>Tem alguma alergia ou doença?</mat-label>
+                        <mat-select formControlName="illness" required>
+                            <mat-option [value]='true'>Sim</mat-option>
+                            <mat-option [value]='false'>Não</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field>
+                        <mat-label>Precisa de uma receita especial?</mat-label>
+                        <mat-select formControlName="special_case" required>
+                            <mat-option [value]='true'>Sim</mat-option>
+                            <mat-option [value]='false'>Não</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+
+                <div>
+                    <button mat-button matStepperNext>Avançar</button>
+                </div>
+            </form>
+        </mat-step>
+
+
         <mat-step>
             <ng-template matStepLabel>Finalizar</ng-template>
-            <p>Muito Obrigado! Termine seu pedido que entraremos em contato em breve</p>
             <div>
                 <button mat-button matStepperPrevious>Voltar</button>
-                <button mat-button (click)="stepper.reset()">Recomeçar</button>
-                <button mat-raised-button (click)="testClick()" color='warn'>Enviar pedido</button>
+                <!-- <button mat-button (click)="stepper.reset()">Recomeçar</button> -->
+                <button mat-raised-button (click)="calculatePlan()" color='warn'>Calcular meu plano</button>
             </div>
         </mat-step>
     </mat-vertical-stepper>
