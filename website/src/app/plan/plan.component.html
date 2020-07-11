@@ -1,7 +1,7 @@
 <main>
     <app-loader *ngIf='calculating'></app-loader>
     <!-- <section *ngIf='!finished'> -->
-    <section>
+    <section *ngIf='!loading'>
         
     <mat-vertical-stepper linear #stepper>
         <mat-step [stepControl]="firstFormGroup">

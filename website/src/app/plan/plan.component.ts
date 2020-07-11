@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { FoodCalcService } from '../food-calc.service';
+import { FoodCalcService } from '../services/food-calc.service';
+import { HttpService } from '../services/http.service';
 
 @Component({
   selector: 'app-plan',
@@ -9,15 +10,19 @@ import { FoodCalcService } from '../food-calc.service';
 })
 export class PlanComponent implements OnInit {
 
-
-  constructor(private _formBuilder: FormBuilder, private foodCalc: FoodCalcService) {}
+  constructor(
+    private _formBuilder: FormBuilder, 
+    private foodCalc: FoodCalcService, 
+    private http: HttpService) {}
   
+  
+  loading :boolean = true;
   calculating :boolean = false;
   finished :boolean = false;
 
   dog:any ;
   
-  breeds = this.foodCalc.getBreeds() 
+  breeds:any ;
     
   activities : any = [
     {name:'Pouco Ativo', value:'inactive'},
@@ -40,7 +45,8 @@ export class PlanComponent implements OnInit {
   fourthFormGroup: FormGroup;
   fithFormGroup: FormGroup;
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.breeds = await this.http.getJSON('breeds.json')
 
     this.firstFormGroup = this._formBuilder.group({
       name: ['', Validators.required]
@@ -63,6 +69,8 @@ export class PlanComponent implements OnInit {
       illness: ['', Validators.required],
       special_case: ['', Validators.required],
     });
+
+    this.loading = false;
   }
 
 
