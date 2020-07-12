@@ -2,6 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { FoodCalcService } from '../services/food-calc.service';
 import { HttpService } from '../services/http.service';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import {breedsGroups} from './breeds'
+
+export const _filter = (opt: string[], value: string): string[] => {
+  const filterValue = value.toLowerCase();
+
+  return opt.filter(item => item.toLowerCase().indexOf(filterValue) === 0);
+};
 
 @Component({
   selector: 'app-plan',
@@ -10,20 +19,16 @@ import { HttpService } from '../services/http.service';
 })
 export class PlanComponent implements OnInit {
 
-  constructor(
-    private _formBuilder: FormBuilder, 
-    private foodCalc: FoodCalcService, 
-    private http: HttpService) {}
+  constructor(private _formBuilder: FormBuilder, private foodCalc: FoodCalcService, private http: HttpService) {}
   
-  
+  filteredOptions: Observable<string[]>;
   loading :boolean = true;
   calculating :boolean = false;
   finished :boolean = false;
 
   dog:any ;
-  
   breeds:any ;
-    
+  
   activities : any = [
     {name:'Pouco Ativo', value:'inactive'},
     {name:'Ativo', value:'active'},
@@ -39,40 +44,47 @@ export class PlanComponent implements OnInit {
   min_weight = 0;
   max_weight = 99;
 
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-  thirdFormGroup: FormGroup;
-  fourthFormGroup: FormGroup;
-  fithFormGroup: FormGroup;
+  firstFormGroup: FormGroup = this._formBuilder.group({
+    name: ['', Validators.required]
+    });
+  secondFormGroup: FormGroup  = this._formBuilder.group({
+    age: ['', [Validators.required, Validators.min(1)]],
+    breed: ['', Validators.required],
+  });
+  thirdFormGroup: FormGroup = this._formBuilder.group({
+    weight: ['', Validators.required],
+    weight_range: ['', Validators.required],
+    ideal_weight: ['', [Validators.min(this.min_weight), Validators.max(this.max_weight)]],
+  });
+  fourthFormGroup: FormGroup = this._formBuilder.group({
+    activity: ['', Validators.required],
+  });
+  fithFormGroup: FormGroup = this._formBuilder.group({
+    illness: ['', Validators.required],
+    special_case: ['', Validators.required],
+  });
 
+  stateGroups = breedsGroups
+  stateGroupOptions: Observable<any[]>;
   async ngOnInit() {
     this.breeds = await this.http.getJSON('breeds.json')
-
-    this.firstFormGroup = this._formBuilder.group({
-      name: ['', Validators.required]
-    });
-    this.secondFormGroup = this._formBuilder.group({
-      age: ['', [Validators.required, Validators.min(1)]],
-      breed: ['', Validators.required],
-    });
-    this.thirdFormGroup = this._formBuilder.group({
-      weight: ['', Validators.required],
-      weight_range: ['', Validators.required],
-      ideal_weight: ['', [Validators.min(this.min_weight), Validators.max(this.max_weight)]],
-    });
-    
-    this.fourthFormGroup = this._formBuilder.group({
-      activity: ['', Validators.required],
-    });
-    
-    this.fithFormGroup = this._formBuilder.group({
-      illness: ['', Validators.required],
-      special_case: ['', Validators.required],
-    });
-
     this.loading = false;
+    this.stateGroupOptions = this.secondFormGroup.get('breed')!.valueChanges
+    .pipe(
+      startWith(''),
+      map(value => this._filterGroup(value))
+    );
   }
 
+  private _filterGroup(value: string): any[] {
+    if (value) {
+      return this.stateGroups
+        .map(group => ({letter: group.letter, names: _filter(group.names, value)}))
+        .filter(group => group.names.length > 0);
+    }
+
+    return this.stateGroups;
+  }
 
   changeWeight() {
     console.log('mudou peso',this.thirdFormGroup.value.weight_range)
@@ -97,6 +109,7 @@ export class PlanComponent implements OnInit {
     this.thirdFormGroup.controls['ideal_weight'].updateValueAndValidity()
   }
 
+  
   calculatePlan(){
     this.calculating = true;
     this.finished = false;

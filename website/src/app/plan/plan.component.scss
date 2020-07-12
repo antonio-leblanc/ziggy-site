@@ -5,7 +5,16 @@ main{
     margin-top: 8px;
   }
   
-  .mat-form-field {
-    margin-top: 16px;
+.mat-form-field {
+  margin-top: 16px;
   }
-  
+
+.dog-form{
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.dog-form-entry {
+  width: 100%;
+}

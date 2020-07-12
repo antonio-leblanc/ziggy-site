@@ -18,7 +18,7 @@
         </mat-step>
         
         <mat-step [stepControl]="secondFormGroup">
-            <form [formGroup]="secondFormGroup">
+            <form [formGroup]="secondFormGroup" class="dog-form">
                 <ng-template matStepLabel>Fale-nos mais sobre {{firstFormGroup.value.name}}</ng-template>
                 <div>
                     <mat-form-field>
@@ -27,14 +27,21 @@
                     </mat-form-field>
                 </div>
                 <div>
-                    <mat-form-field>
-                        <mat-label>Raça</mat-label>
-                        <mat-select formControlName="breed" required>
-                          <mat-option *ngFor="let breed of breeds" [value]="breed.name">
-                            {{breed.name}}
-                          </mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                    <mat-form-field class="dog-form-entry">
+                        <input type="text"
+                               matInput
+                               placeholder="Raça"
+                               formControlName="breed"
+                               required
+                               [matAutocomplete]="autoGroup">
+                          <mat-autocomplete #autoGroup="matAutocomplete">
+                            <mat-optgroup *ngFor="let group of stateGroupOptions | async" [label]="group.letter">
+                              <mat-option *ngFor="let name of group.names" [value]="name">
+                                {{name}}
+                              </mat-option>
+                          </mat-optgroup>
+                        </mat-autocomplete>
+                      </mat-form-field>
                 </div>
                 <div>
                     <button mat-button matStepperPrevious>Voltar</button>
