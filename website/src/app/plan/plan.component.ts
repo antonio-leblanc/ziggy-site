@@ -27,7 +27,6 @@ export class PlanComponent implements OnInit {
   finished :boolean = false;
 
   dog:any ;
-  breeds:any ;
   
   activities : any = [
     {name:'Pouco Ativo', value:'inactive'},
@@ -49,6 +48,7 @@ export class PlanComponent implements OnInit {
     });
   secondFormGroup: FormGroup  = this._formBuilder.group({
     age: ['', [Validators.required, Validators.min(1)]],
+    gender: ['', Validators.required],
     breed: ['', Validators.required],
   });
   thirdFormGroup: FormGroup = this._formBuilder.group({
@@ -64,12 +64,11 @@ export class PlanComponent implements OnInit {
     special_case: ['', Validators.required],
   });
 
-  stateGroups = breedsGroups
-  stateGroupOptions: Observable<any[]>;
+  breedGroup = breedsGroups
+  breedGroupOptions: Observable<any[]>;
   async ngOnInit() {
-    this.breeds = await this.http.getJSON('breeds.json')
     this.loading = false;
-    this.stateGroupOptions = this.secondFormGroup.get('breed')!.valueChanges
+    this.breedGroupOptions = this.secondFormGroup.get('breed')!.valueChanges
     .pipe(
       startWith(''),
       map(value => this._filterGroup(value))
@@ -78,12 +77,12 @@ export class PlanComponent implements OnInit {
 
   private _filterGroup(value: string): any[] {
     if (value) {
-      return this.stateGroups
+      return this.breedGroup
         .map(group => ({letter: group.letter, names: _filter(group.names, value)}))
         .filter(group => group.names.length > 0);
     }
 
-    return this.stateGroups;
+    return this.breedGroup;
   }
 
   changeWeight() {

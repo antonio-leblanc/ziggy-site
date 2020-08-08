@@ -7,7 +7,7 @@
         <mat-step [stepControl]="firstFormGroup">
             <form [formGroup]="firstFormGroup">
                 <ng-template matStepLabel>Qual o nome do seu cão?</ng-template>
-                <mat-form-field>
+                <mat-form-field class="dog-form-entry">
                     <mat-label>Nome</mat-label>
                     <input matInput placeholder="Estou com fome!" formControlName="name" required>
                 </mat-form-field>
@@ -21,9 +21,18 @@
             <form [formGroup]="secondFormGroup" class="dog-form">
                 <ng-template matStepLabel>Fale-nos mais sobre {{firstFormGroup.value.name}}</ng-template>
                 <div>
-                    <mat-form-field>
+                    <mat-form-field class="dog-form-entry">
                         <mat-label>Idade</mat-label>
                         <input matInput formControlName="age" placeholder="Anos" type="number" min=1 required>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="dog-form-entry">
+                        <mat-label>Sexo</mat-label>
+                        <mat-select formControlName="gender" required>
+                            <mat-option value="Femea">Fêmea</mat-option>
+                            <mat-option value="Macho">Macho</mat-option>
+                          </mat-select>
                     </mat-form-field>
                 </div>
                 <div>
@@ -35,7 +44,7 @@
                                required
                                [matAutocomplete]="autoGroup">
                           <mat-autocomplete #autoGroup="matAutocomplete">
-                            <mat-optgroup *ngFor="let group of stateGroupOptions | async" [label]="group.letter">
+                            <mat-optgroup *ngFor="let group of breedGroupOptions | async" [label]="group.letter">
                               <mat-option *ngFor="let name of group.names" [value]="name">
                                 {{name}}
                               </mat-option>
@@ -55,14 +64,14 @@
                 <ng-template matStepLabel>Como anda o peso de {{firstFormGroup.value.name}}</ng-template>
                 
                 <div>
-                    <mat-form-field>
+                    <mat-form-field class="dog-form-entry">
                         <mat-label>Peso (kg)</mat-label>
                         <input matInput formControlName="weight" placeholder="" type="number" required (change)="changeWeight()">
                     </mat-form-field>
                 </div>
                 
                 <div>
-                    <mat-form-field>
+                    <mat-form-field class="dog-form-entry">
                         <mat-label>{{firstFormGroup.value.name}} está ...</mat-label>
                         <mat-select formControlName="weight_range" required (selectionChange)="changeWeight()">
                           <mat-option *ngFor="let w_range of weight_ranges" [value]="w_range.value">
@@ -73,7 +82,7 @@
                 </div>
 
                 <div *ngIf='thirdFormGroup.value.weight_range !=0'>
-                    <mat-form-field>
+                    <mat-form-field class="dog-form-entry">
                         <mat-label>Peso ideal - kg (opcional)</mat-label>
                         <input matInput formControlName="ideal_weight" placeholder="" type="number" [min]='min_weight' [max]='max_weight'>
                     </mat-form-field>
@@ -91,7 +100,7 @@
         <mat-step [stepControl]="fourthFormGroup">
             <form [formGroup]="fourthFormGroup">
                 <ng-template matStepLabel> Falando agora da atividade</ng-template>
-                <mat-form-field>
+                <mat-form-field class="dog-form-entry">
                     <mat-label>Nível de atividade</mat-label>
                     <mat-select formControlName="activity" required>
                         <mat-option *ngFor="let act of activities" [value]="act.value">
@@ -111,7 +120,7 @@
             <form [formGroup]="fithFormGroup">
                 <ng-template matStepLabel>Como é a saúde de {{firstFormGroup.value.name}}</ng-template>
                 <div>
-                    <mat-form-field>
+                    <mat-form-field class="dog-form-entry">
                         <mat-label>Alergias ou doenças?</mat-label>
                         <mat-select formControlName="illness" required>
                             <mat-option [value]='true'>Sim</mat-option>
@@ -120,7 +129,7 @@
                     </mat-form-field>
                 </div>
                 <div>
-                    <mat-form-field>
+                    <mat-form-field class="dog-form-entry">
                         <mat-label>Precisa de receita especial?</mat-label>
                         <mat-select formControlName="special_case" required>
                             <mat-option [value]='true'>Sim</mat-option>
