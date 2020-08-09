@@ -121,7 +121,6 @@ export class PlanComponent implements OnInit {
       this.fithFormGroup.value,
       );
     
-    
     this.dog = this.foodCalc.calculatePlan(this.dog)
     
     console.log(this.dog)
@@ -130,6 +129,35 @@ export class PlanComponent implements OnInit {
       this.calculating = false;
       this.finished = true;
     },3000)
+  }
+
+  async sendPlan(){
+    var html = ` <html>
+    <head>
+    <style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    </style>
+    </head>
+    <body>
+    <h3> Seguem detalhes do pedido </h3>
+    <table>`;
+    Object.entries(this.dog).forEach( (entry)=>{
+      html += `<tr> 
+                <td>${entry[0]}</td>
+                <td>${entry[1]}</td>
+              </tr>`
+    })
+    html += `</table>
+    </body>
+    </html>
+    `;
+    this.dog['html'] = html;
+    console.log(this.dog);
+    let response = await this.http.postPlan(this.dog);
+    console.log("server response");
   }
   
 }

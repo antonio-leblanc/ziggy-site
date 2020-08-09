@@ -168,7 +168,13 @@
             <li>Estimativa de preço semanal: {{dog.price_per_week}} R$, representando {{dog.packages_per_week}} pacotes de 500g</li>
         </ul>
         
-        <img src="../../assets/dog-food.svg">
+        <img src="../../assets/ingredients1.jpeg">
+
+        <button mat-raised-button (click)="sendPlan()" color='warn'>Enviar Pedido</button>
+
+        <p>
+            Todos os valores são aproximados e é recomendado conversar com seu veterinário para incluir qualquer suplemento da dieta caso seu amigo tenha uma doença ou outro tipo de condição
+        </p>
         
 
     </section>
