@@ -5,7 +5,8 @@ require 'PHPMailer/PHPMailerAutoload.php';
 // Read incoming JSON
 $json = file_get_contents('php://input');
 $data = json_decode($json);
-echo $data->subject;
+
+$body = $data->html;
 
 // Mail Settings
 $smtp_secure = 'ssl';
@@ -39,15 +40,15 @@ $mail->setFrom($sender_email, $sender_name);
 $mail->addAddress($receiver_email, $receiver_name);
 // $mail->addReplyTo('info@example.com', 'Information');
 
-$mail->Subject = $data->subject;
-$mail->Body    = $data->subject;
+$mail->Subject = "Pedido de Plano";
+$mail->Body = $body;
 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
 if(!$mail->send()) {
     echo 'Message could not be sent.';
     echo 'Mailer Error: ' . $mail->ErrorInfo;
 } else {
-    echo 'Message has been sent';
+    echo 'Email do plano enviado';
 }
 
 ?>
